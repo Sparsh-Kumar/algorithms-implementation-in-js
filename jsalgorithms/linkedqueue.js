@@ -30,8 +30,11 @@ class Queue {
         }
     }
     remove () {
-        let node = this.front;
-        this.front = this.front.next;
+        let node = undefined;
+        if (this.front) {
+            node = this.front;
+            this.front = this.front.next;
+        }
         return node;
     }
     display () {
