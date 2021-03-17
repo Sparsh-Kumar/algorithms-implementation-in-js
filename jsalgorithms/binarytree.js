@@ -77,106 +77,97 @@
 */
 
 // Defining the class Node
+
 class Node {
-    constructor (cargo = undefined, left_node = undefined, right_node = undefined) {
+    constructor ( cargo = undefined, _id = undefined, parent = undefined, left_node = undefined, right_node = undefined ) {
         this.cargo = cargo;
+        this._id = _id;
+        this.parent = parent;
         this.left_node = left_node;
         this.right_node = right_node;
     }
 
-    insertLeft (left_node = undefined) {
-        if (left_node) {
-            this.left_node = left_node;
-        }
-    }
+    setLeftNode ( left_node = undefined ) { this.left_node = left_node; }
+    setRightNode ( right_node = undefined ) { this.right_node = right_node; }
+    setCargo ( cargo = undefined ) { this.cargo = cargo; }
+    setParent ( parent = undefined ) { this.parent = parent; }
+    setID ( _id = undefined ) { this._id = _id; }
 
-    insertRight (right_node = undefined) {
-        if (right_node) {
-            this.right_node = right_node;
-        }
-    }
+    getLeftNode () { return this.left_node; }
+    getRightNode () { return this.right_node; }
+    getCargo () { return this.cargo; }
+    getParent () { return this.parent; }
+    getID () { return this._id; }
 
-    insertCargo (cargo = undefined) {
-        this.cargo = cargo;
-    }
-
-    getLeft () { return this.left_node; }
-    getRight () { return this.right_node; }
-    getCargo ()  { return this.cargo; }
-    
 }
 
-
-// Defining the class BinaryTree
+// Defining the Class BinaryTree
 
 class BinaryTree {
-    constructor () { this.rootnode = undefined; this._id = 0; }
-    insertLeft (rootnode = undefined, cargo = undefined) {
-        if (!cargo) { return undefined; }
-        else {
-            let node = new Node (cargo);
-            if (!rootnode) {
-                rootnode = node;
-            } else {
-                rootnode.insertLeft (node);
-            }
-        }
-        return rootnode;
+    constructor () { 
+        this.rootnode = undefined;
+        this._id = 0;
     }
-    insertRight (rootnode = undefined, cargo = undefined) {
-        if (!cargo) { return undefined; }
-        else {
-            let node = new Node (cargo);
-            if (!rootnode) {
-                rootnode = node;
-            } else {
-                rootnode.insertRight (node);
-            }
-        }
-        return rootnode;
-    }
-    findNode (rootnode = undefined, _id = undefined) {
-        if (!rootnode || !_id) {
-            return undefined;
+    insertLeftNode ( rootnode = undefined, cargo = undefined ) {
+        let node = new Node ( cargo, this._id, rootnode );
+        if (!rootnode) {
+            rootnode = node;
         } else {
-            if (rootnode.getCargo () === _id) {
+            rootnode.setLeftNode ( node );
+        }
+        this._id++;
+        return rootnode;
+    }
+    insertRightNode ( rootnode = undefined, cargo = undefined ) {
+        let node = new Node ( cargo, this._id, rootnode );
+        if (!rootnode) {
+            rootnode = node;
+        } else {
+            rootnode.setRightNode ( node );
+        }
+        this._id++;
+        return rootnode;
+    }
+    setRoot ( rootnode = undefined ) { this.rootnode = rootnode; }
+    getRoot () { return this.rootnode; }
+    findNode ( rootnode = undefined, _id = undefined ) {
+        if (rootnode && _id) {
+            if (rootnode.getID () === _id) {
                 return rootnode;
             } else {
-                let left_result = this.findNode (rootnode.getLeft ());
-                if (left_result) {
+                let left_result = this.findNode ( rootnode.getLeftNode (), _id );
+                if (left_result && left_result.getID () === _id) {
                     return left_result;
                 }
-                let right_result = this.findNode (rootnode.getRight ());
-                if (right_result) {
+                let right_result = this.findNode ( rootnode.getRightNode (), _id );
+                if (right_result && right_result.getID () === _id) {
                     return right_result;
                 }
             }
         }
         return undefined;
     }
-    displayBinaryTree (rootnode = undefined) {
+    displayBinaryTree ( rootnode = undefined ) {
         if (rootnode) {
             console.log (rootnode.getCargo ());
-            this.displayBinaryTree (rootnode.getLeft ());
-            this.displayBinaryTree (rootnode.getRight ());
-        }
-        return rootnode;
-    }
-    setRoot (rootnode = undefined) {
-        if (rootnode) {
-            this.rootnode = rootnode;
+            this.displayBinaryTree ( rootnode.getLeftNode () );
+            this.displayBinaryTree ( rootnode.getRightNode () );
         }
     }
-    getRoot () { return this.rootnode; }
 }
+
+// Defining the main function
 
 let main = () => {
     let tree = new BinaryTree ();
-    tree.setRoot (tree.insertLeft (tree.getRoot (), 20));
-    tree.setRoot (tree.insertLeft (tree.getRoot (), 30));
-    tree.setRoot (tree.insertRight (tree.getRoot (), 40));
+    tree.setRoot (tree.insertLeftNode (tree.getRoot (), 10));
+    tree.setRoot (tree.insertLeftNode (tree.getRoot (), 20));
+    tree.setRoot (tree.insertRightNode (tree.getRoot (), 30));
     tree.displayBinaryTree (tree.getRoot ());
+
+    let second_node = tree.findNode (tree.getRoot (), 2);
+    console.log (second_node.getCargo ());
 
 }
 
-main ()
+main ();
