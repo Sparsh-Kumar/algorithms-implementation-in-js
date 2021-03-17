@@ -165,8 +165,19 @@ let main = () => {
     tree.setRoot (tree.insertRightNode (tree.getRoot (), 30));
     tree.displayBinaryTree (tree.getRoot ());
 
-    let second_node = tree.findNode (tree.getRoot (), 2);
-    console.log (second_node.getCargo ());
+    let second_id_node = tree.findNode (tree.getRoot (), 2);
+    console.log (second_id_node.getCargo ());
+
+    tree.insertLeftNode (second_id_node, 40);
+    tree.insertRightNode (second_id_node, 50);
+
+    tree.displayBinaryTree (tree.getRoot ());
+
+    let third_id_node = tree.findNode (tree.getRoot (), 3);
+    console.log (third_id_node.getCargo ());
+
+    let non_existent_node = tree.findNode (tree.getRoot (), 9);
+    console.log (non_existent_node);
 
 }
 
