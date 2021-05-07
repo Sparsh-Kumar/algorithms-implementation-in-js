@@ -18,7 +18,7 @@ const findElement = (arr, low, high, element) => {
 }
 
 let main = () => {
-    let arr = [1, 3, 5, 6, 8, 9, 10]
+    let arr = [1, 3, 89, 98, 109, 301, 600]
     let element = findElement (arr, 0, 6, 1);
     console.log (element);
 }
