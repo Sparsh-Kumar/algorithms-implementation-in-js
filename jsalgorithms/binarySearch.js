@@ -8,7 +8,7 @@ let BinarySearch = (arr, start, end, item) => {
     if (arr [mid] === item) {
         return { item, index: mid }
     } else if (arr [mid] > item) {
-        return BinarySearch (arr, start, end - 1, item);
+        return BinarySearch (arr, start, mid - 1, item);
     } else if (arr [mid] < item) {
         return BinarySearch (arr, mid + 1, end, item );
     }
